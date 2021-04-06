@@ -2,10 +2,11 @@
 #define MAINWIDGET_H
 
 #include <QWidget>
+#include <QTcpSocket>
 
-namespace Ui {
-class MainWidget;
-}
+namespace Ui { class MainWidget; }
+
+class QTcpSocket;
 
 class MainWidget : public QWidget
 {
@@ -15,8 +16,14 @@ public:
     explicit MainWidget(QWidget *parent = nullptr);
     ~MainWidget();
 
+private slots:
+    void on_run_button_clicked();
+
+    void on_clear_button_clicked();
+
 private:
     Ui::MainWidget *ui;
+    QTcpSocket *mSocket;
 };
 
 #endif // MAINWIDGET_H
