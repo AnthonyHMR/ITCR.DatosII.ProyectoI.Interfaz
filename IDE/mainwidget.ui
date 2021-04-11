@@ -68,7 +68,7 @@
       <widget class="QTableWidget" name="ram_view_table"/>
      </item>
      <item row="2" column="0">
-      <widget class="QPlainTextEdit" name="ide_plainTextEdit"/>
+      <widget class="QTextEdit" name="ide_TextEdit"/>
      </item>
     </layout>
    </item>

@@ -24,6 +24,7 @@ private slots:
 private:
     Ui::MainWidget *ui;
     QTcpSocket *mSocket;
+    int line = 0;
 };
 
 #endif // MAINWIDGET_H
