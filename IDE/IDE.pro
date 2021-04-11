@@ -16,14 +16,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    jsonConverter.cpp \
     main.cpp \
-    mainwidget.cpp
+    mainWidget.cpp
 
 HEADERS += \
-    mainwidget.h
+    jsonConverter.h \
+    mainWidget.h
 
 FORMS += \
-    mainwidget.ui
+    mainWidget.ui
 
 QMAKE_CXXFLAGS += -std=gnu++11
 

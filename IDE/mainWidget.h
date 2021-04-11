@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTcpSocket>
+#include <jsonConverter.h>
 
 namespace Ui { class MainWidget; }
 
@@ -24,6 +25,8 @@ private slots:
 private:
     Ui::MainWidget *ui;
     QTcpSocket *mSocket;
+    jsonConverter *json = NULL;
+
     int line = 0;
 };
 

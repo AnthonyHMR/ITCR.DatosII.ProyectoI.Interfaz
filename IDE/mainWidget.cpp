@@ -1,6 +1,8 @@
-#include "mainwidget.h"
+#include "mainWidget.h"
 #include "ui_mainwidget.h"
 #include "ui_mainwidget.h"
+#include "jsonConverter.h"
+
 #include "QRegExp"
 #include <QFile>
 #include <QJsonDocument>
@@ -26,6 +28,7 @@ MainWidget::MainWidget(QWidget *parent) :
 
 MainWidget::~MainWidget()
 {
+    delete json;
     delete ui;
 }
 
@@ -33,19 +36,13 @@ void MainWidget::on_run_button_clicked()
 {
     QString code = ui->ide_TextEdit->toPlainText();
 
+    /*
     QRegExp lines("(\\\n)");
     QRegExp objects("(\\ |\\;)");
 
     QStringList queryLines = code.split(lines);
     queryLines.removeAll("");
 
-    //int lengthLista = queryLines.length()-1;
-
-    //for (int i=0; i<=lengthLista; i++) {
-    //    if (queryLines[i] == "") {
-    //        queryLines.removeAt(i);
-    //    }
-    //}
     QStringList queryObjects = queryLines[line].split(objects);
     queryObjects.removeAll("");
 
@@ -76,10 +73,21 @@ void MainWidget::on_run_button_clicked()
 
 
     data_json = doc.toJson();
+    */
+    if (json == NULL) {
+        json = new jsonConverter(this);
+    }
 
     QTextStream T(mSocket);
-    T << data_json;
+    T << json->Convert(code);
     mSocket->flush();
+
+    if (json->lineBreak()) {
+        QMessageBox::information(this, tr("Message"), tr("Your code has been executed successfully!"));
+        ui->run_button->setText("run");
+    } else {
+        ui->run_button->setText("Next");
+    }
 }
 
 void MainWidget::on_clear_button_clicked()
