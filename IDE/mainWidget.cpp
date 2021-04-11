@@ -36,58 +36,29 @@ void MainWidget::on_run_button_clicked()
 {
     QString code = ui->ide_TextEdit->toPlainText();
 
-    /*
-    QRegExp lines("(\\\n)");
-    QRegExp objects("(\\ |\\;)");
-
-    QStringList queryLines = code.split(lines);
-    queryLines.removeAll("");
-
-    QStringList queryObjects = queryLines[line].split(objects);
-    queryObjects.removeAll("");
-
-    if (line == queryLines.length()-1) {
-        QMessageBox::information(this, tr("Message"), tr("Your code has been executed successfully!"));
-        ui->run_button->setText("run");
-        line = 0;
-    } else {
-        ui->run_button->setText("Next");
-        line++;
-    }
-
-    QByteArray data_json;
-    QJsonDocument doc;
-    QJsonObject obj;
-
-    obj["dataType"] = queryObjects[0];
-    obj["label"] = queryObjects[1];
-    if (!queryObjects[2].isEmpty()) {
-        obj["expression"] = queryObjects[2];
-        obj["value"] = queryObjects[3];
-    } else {
-        obj["expression"] = "";
-        obj["value"] = "";
-    }
-
-    doc.setObject(obj);
-
-
-    data_json = doc.toJson();
-    */
     if (json == NULL) {
         json = new jsonConverter(this);
     }
 
-    QTextStream T(mSocket);
-    T << json->Convert(code);
-    mSocket->flush();
+    QString text = json->Convert(code);
+    QString error = json->getError();
 
-    if (json->lineBreak()) {
-        QMessageBox::information(this, tr("Message"), tr("Your code has been executed successfully!"));
+    if (error != "") {
+        ui->applog_textEdit->append(error);
+        QMessageBox::information(this, tr("Information"), tr("Your code has failed!"));
         ui->run_button->setText("run");
+
+    }else if (json->lineBreak()) {
+        QMessageBox::information(this, tr("Information"), tr("Your code has been executed successfully!"));
+        ui->run_button->setText("run");
+
     } else {
         ui->run_button->setText("Next");
     }
+
+    QTextStream T(mSocket);
+    T << text;
+    mSocket->flush();
 }
 
 void MainWidget::on_clear_button_clicked()

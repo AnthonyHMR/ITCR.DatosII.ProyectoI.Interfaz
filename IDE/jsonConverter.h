@@ -8,10 +8,13 @@ class jsonConverter : public QObject
     Q_OBJECT
 public:
     explicit jsonConverter(QObject *parent = nullptr);
-    QString Convert(QString entry);
+    QString Convert(QString);
     bool lineBreak();
+    QString getError();
 
 private:
+    void setError(QString);
+    QString error = "";
     QStringList queryLines;
     int line = 0;
 };

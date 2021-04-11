@@ -26,8 +26,6 @@ private:
     Ui::MainWidget *ui;
     QTcpSocket *mSocket;
     jsonConverter *json = NULL;
-
-    int line = 0;
 };
 
 #endif // MAINWIDGET_H
