@@ -32,13 +32,18 @@ MainWidget::~MainWidget()
     delete ui;
 }
 
+void MainWidget::singleton()
+{
+    if (json == NULL) {
+        json = new jsonConverter(this);
+    }
+}
+
 void MainWidget::on_run_button_clicked()
 {
     QString code = ui->ide_TextEdit->toPlainText();
 
-    if (json == NULL) {
-        json = new jsonConverter(this);
-    }
+    singleton();
 
     QString text = json->Convert(code);
     QString error = json->getError();

@@ -23,9 +23,10 @@ private slots:
     void on_clear_button_clicked();
 
 private:
+    void singleton();
     Ui::MainWidget *ui;
     QTcpSocket *mSocket;
-    jsonConverter *json = NULL;
+    jsonConverter *json;
 };
 
 #endif // MAINWIDGET_H
