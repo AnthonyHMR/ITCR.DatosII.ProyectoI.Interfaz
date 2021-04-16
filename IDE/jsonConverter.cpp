@@ -54,17 +54,17 @@ QJsonObject jsonConverter::getConditions() {
     if (!queryLines[line].endsWith(";")) {
         setError("Expected ';' at end of declaration");
 
-    }else if (queryObjects[0] == "int" or queryObjects[0] == "string") {
+    }else if (queryObjects[0] == "int" or queryObjects[0] == "string" or queryObjects[0] == "char") {
         obj["dataType"] = queryObjects[0];
         obj["label"] = queryObjects[1];
 
         if (queryObjects[2].isEmpty()) {
             obj["expression"] = "";
             obj["value"] = "0";
-        } else if ((queryObjects[0] == "int") and (queryObjects[2] == "=" or queryObjects[2] == "+" or queryObjects[2] == "-" or queryObjects[2] == "*" or queryObjects[2] == "/")) {
+        } else if ((queryObjects[0] == "int" or queryObjects[0] == "char") and (queryObjects[2] == "-" or queryObjects[2] == "*" or queryObjects[2] == "/")) {
             obj["expression"] = queryObjects[2];
             obj["value"] = queryObjects[3];
-        } else if (queryObjects[0] == "string" and queryObjects[2] == "=") {
+        } else if (queryObjects[2] == "=" or queryObjects[2] == "+") {
             obj["expression"] = queryObjects[2];
             obj["value"] = queryObjects[3];
         } else {
