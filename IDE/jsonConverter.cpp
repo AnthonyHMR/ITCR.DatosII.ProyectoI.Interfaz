@@ -2,7 +2,6 @@
 #include "QRegExp"
 #include <QFile>
 #include <QJsonDocument>
-#include <QJsonObject>
 #include <QMessageBox>
 
 jsonConverter::jsonConverter(QObject *parent) : QObject(parent)
@@ -19,25 +18,49 @@ QString jsonConverter::Convert(QString entry)
     queryLines = entry.split(lines);
     queryLines.removeAll("");
 
-    if (!queryLines[line].endsWith(";")) {
-        setError("Expected ';' at end of declaration");
-        return 0;
-    }
-
-    QStringList queryObjects = queryLines[line].split(objects);
+    queryObjects = queryLines[line].split(objects);
     //queryObjects.removeAll("");
 
     QByteArray data_json;
     QJsonDocument doc;
+    QJsonObject conditions = getConditions();
+
+    if (getError() != "") {
+        return 0;
+    }
+
+    line ++;
+
+    ArrayObj.append(conditions);
+
+    if (codeEnd()){
+        addJsonFile(ArrayObj, "variables");
+        while(!ArrayObj.isEmpty()) {
+            ArrayObj.removeLast();
+        }
+        setError("end");
+    }
+
+    doc.setObject(conditions);
+
+    data_json = doc.toJson();
+
+    return data_json;
+}
+
+QJsonObject jsonConverter::getConditions() {
     QJsonObject obj;
 
-    if (queryObjects[0] == "int" or queryObjects[0] == "string") {
+    if (!queryLines[line].endsWith(";")) {
+        setError("Expected ';' at end of declaration");
+
+    }else if (queryObjects[0] == "int" or queryObjects[0] == "string") {
         obj["dataType"] = queryObjects[0];
         obj["label"] = queryObjects[1];
 
         if (queryObjects[2].isEmpty()) {
             obj["expression"] = "";
-            obj["value"] = "";
+            obj["value"] = "0";
         } else if ((queryObjects[0] == "int") and (queryObjects[2] == "=" or queryObjects[2] == "+" or queryObjects[2] == "-" or queryObjects[2] == "*" or queryObjects[2] == "/")) {
             obj["expression"] = queryObjects[2];
             obj["value"] = queryObjects[3];
@@ -46,28 +69,34 @@ QString jsonConverter::Convert(QString entry)
             obj["value"] = queryObjects[3];
         } else {
             setError("Unexpected expresion");
-            return 0;
         }
 
     } else {
         setError("Error data type");
-        return 0;
     }
 
-    doc.setObject(obj);
-
-    data_json = doc.toJson();
-
-    return data_json;
+    return obj;
 }
 
-bool jsonConverter::lineBreak()
+void jsonConverter::addJsonFile(QJsonArray ArrayObj, QString fileName)
 {
-    if (line == queryLines.length()-1) {
-        line = 0;
+    QByteArray data_json;
+    QJsonDocument doc;
+
+    doc.setArray(ArrayObj);
+    data_json = doc.toJson();
+
+    QFile output("../" + fileName + ".json");
+    output.open(QIODevice::WriteOnly | QIODevice::Text);
+    output.write(data_json);
+    output.close();
+}
+
+bool jsonConverter::codeEnd()
+{
+    if (line == queryLines.length()) {
         return true;
     }
-    line++;
     return false;
 }
 

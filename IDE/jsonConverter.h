@@ -2,6 +2,8 @@
 #define JSONCONVERTER_H
 
 #include <QObject>
+#include <QJsonObject>
+#include <QJsonArray>
 
 class jsonConverter : public QObject
 {
@@ -9,14 +11,17 @@ class jsonConverter : public QObject
 public:
     explicit jsonConverter(QObject *parent = nullptr);
     QString Convert(QString);
-    bool lineBreak();
     QString getError();
 
 private:
+    QJsonObject getConditions();
+    void addJsonFile(QJsonArray, QString);
+    bool codeEnd();
     void setError(QString);
-    QString error = "";
-    QStringList queryLines;
+    QStringList queryLines, queryObjects;
+    QJsonArray ArrayObj;
     int line = 0;
+    QString error = "";
 };
 
 #endif // JSONCONVERTER_H

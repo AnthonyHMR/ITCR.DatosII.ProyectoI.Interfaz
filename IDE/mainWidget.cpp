@@ -2,7 +2,6 @@
 #include "ui_mainwidget.h"
 #include "ui_mainwidget.h"
 #include "jsonConverter.h"
-
 #include "QRegExp"
 #include <QFile>
 #include <QJsonDocument>
@@ -32,34 +31,40 @@ MainWidget::~MainWidget()
     delete ui;
 }
 
-void MainWidget::singleton()
+void MainWidget::getInstance()
 {
     if (json == NULL) {
         json = new jsonConverter(this);
     }
 }
 
-void MainWidget::on_run_button_clicked()
+void MainWidget::showError()
 {
-    QString code = ui->ide_TextEdit->toPlainText();
-
-    singleton();
-
-    QString text = json->Convert(code);
     QString error = json->getError();
 
-    if (error != "") {
-        ui->applog_textEdit->append(error);
-        QMessageBox::information(this, tr("Information"), tr("Your code has failed!"));
+    if (error == "end") {
+        QMessageBox::information(this, tr("Information"), tr("Your code has been executed successfully!"));
         ui->run_button->setText("run");
 
-    }else if (json->lineBreak()) {
-        QMessageBox::information(this, tr("Information"), tr("Your code has been executed successfully!"));
+    }else if (error != "") {
+        ui->applog_textEdit->append(error);
+        QMessageBox::information(this, tr("Information"), tr("Your code has failed!"));
         ui->run_button->setText("run");
 
     } else {
         ui->run_button->setText("Next");
     }
+}
+
+void MainWidget::on_run_button_clicked()
+{
+    getInstance();
+
+    QString code = ui->ide_TextEdit->toPlainText();
+
+    QString text = json->Convert(code);
+
+    showError();
 
     QTextStream T(mSocket);
     T << text;
