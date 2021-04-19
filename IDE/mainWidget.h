@@ -2,6 +2,7 @@
 #define MAINWIDGET_H
 
 #include <QWidget>
+#include "Results.h"
 #include <QTcpSocket>
 #include <jsonConverter.h>
 
@@ -9,7 +10,7 @@ namespace Ui { class MainWidget; }
 
 class QTcpSocket;
 
-class MainWidget : public QWidget
+class MainWidget : public QWidget, Results
 {
     Q_OBJECT
 

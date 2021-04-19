@@ -13,12 +13,18 @@ MainWidget::MainWidget(QWidget *parent) :
     ui(new Ui::MainWidget)
 {
     ui->setupUi(this);
+
     setWindowTitle("C! IDE");
     mSocket = new QTcpSocket(this);
 
     connect(mSocket, &QTcpSocket::readyRead, [&]() {
         QTextStream T(mSocket);
         auto text = T.readAll();
+        //QJsonDocument jsonResponse = QJsonDocument::fromJson(text.toUtf8());
+
+        //QJsonObject jsonObject = jsonResponse.object();
+
+        //Results::saveResults(jsonObject);
         ui->stdout_textEdit->append(text);
     });
 
