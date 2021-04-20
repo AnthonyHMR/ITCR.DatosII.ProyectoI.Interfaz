@@ -1,12 +1,13 @@
 #include "mainWidget.h"
 #include "ui_mainwidget.h"
 #include "ui_mainwidget.h"
-#include "jsonConverter.h"
+#include "messageGenerator.h"
 #include "QRegExp"
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
+#include <QDebug>
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
@@ -19,12 +20,13 @@ MainWidget::MainWidget(QWidget *parent) :
 
     connect(mSocket, &QTcpSocket::readyRead, [&]() {
         QTextStream T(mSocket);
-        auto text = T.readAll();
-        //QJsonDocument jsonResponse = QJsonDocument::fromJson(text.toUtf8());
+        auto text = T.readLine();
 
-        //QJsonObject jsonObject = jsonResponse.object();
+        jsonConverter *results = new jsonConverter("../results.json");
 
-        //Results::saveResults(jsonObject);
+        results->saveJson(results->getJsonObjectFromString(text));
+        results->readResultsJson();
+
         ui->stdout_textEdit->append(text);
     });
 
@@ -40,7 +42,7 @@ MainWidget::~MainWidget()
 void MainWidget::getInstance()
 {
     if (json == NULL) {
-        json = new jsonConverter(this);
+        json = new messageGenerator(this);
     }
 }
 
@@ -68,7 +70,7 @@ void MainWidget::on_run_button_clicked()
 
     QString code = ui->ide_TextEdit->toPlainText();
 
-    QString text = json->Convert(code);
+    QString text = json->Generate(code);
 
     showError();
 

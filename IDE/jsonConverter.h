@@ -1,27 +1,22 @@
-#ifndef JSONCONVERTER_H
-#define JSONCONVERTER_H
+#ifndef RESULTS_H
+#define RESULTS_H
 
-#include <QObject>
+#include <QString>
+#include "Request.h"
 #include <QJsonObject>
-#include <QJsonArray>
+#include <QJsonDocument>
 
-class jsonConverter : public QObject
+class jsonConverter
 {
-    Q_OBJECT
 public:
-    explicit jsonConverter(QObject *parent = nullptr);
-    QString Convert(QString);
-    QString getError();
-
+    jsonConverter(QString);
+public:
+    void saveJson(QJsonObject);
+    QJsonObject getJsonObjectFromString(const QString);
+    void readResultsJson();
+    Request *request = new Request();
 private:
-    QJsonObject getConditions();
-    void addJsonFile(QJsonArray, QString);
-    bool codeEnd();
-    void setError(QString);
-    QStringList queryLines, queryObjects;
-    QJsonArray ArrayObj;
-    int line = 0;
-    QString error = "";
+    QString fileName;
 };
 
-#endif // JSONCONVERTER_H
+#endif // RESULTS_H

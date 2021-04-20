@@ -18,17 +18,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     Conditions.cpp \
     Request.cpp \
-    Results.cpp \
     jsonConverter.cpp \
     main.cpp \
-    mainWidget.cpp
+    mainWidget.cpp \
+    messageGenerator.cpp
 
 HEADERS += \
     Conditions.h \
     Request.h \
-    Results.h \
     jsonConverter.h \
-    mainWidget.h
+    mainWidget.h \
+    messageGenerator.h
 
 FORMS += \
     mainWidget.ui

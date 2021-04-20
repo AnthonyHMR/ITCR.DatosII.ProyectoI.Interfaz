@@ -2,15 +2,15 @@
 #define MAINWIDGET_H
 
 #include <QWidget>
-#include "Results.h"
+#include "jsonConverter.h"
 #include <QTcpSocket>
-#include <jsonConverter.h>
+#include <messageGenerator.h>
 
 namespace Ui { class MainWidget; }
 
 class QTcpSocket;
 
-class MainWidget : public QWidget, Results
+class MainWidget : public QWidget
 {
     Q_OBJECT
 
@@ -24,11 +24,11 @@ private slots:
     void on_clear_button_clicked();
 
 private:
+    Ui::MainWidget *ui;
     void getInstance();
     void showError();
-    Ui::MainWidget *ui;
     QTcpSocket *mSocket;
-    jsonConverter *json;
+    messageGenerator *json;
 };
 
 #endif // MAINWIDGET_H
