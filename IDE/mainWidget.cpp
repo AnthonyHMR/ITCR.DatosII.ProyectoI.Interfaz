@@ -14,8 +14,13 @@ MainWidget::MainWidget(QWidget *parent) :
     ui(new Ui::MainWidget)
 {
     ui->setupUi(this);
-
     setWindowTitle("C! IDE");
+
+    ui->ram_view_table->setColumnCount(4);
+    QStringList titles;
+    titles << "Address" << "Value" << "Label" << "References";
+    ui->ram_view_table->setHorizontalHeaderLabels(titles);
+
     mSocket = new QTcpSocket(this);
 
     connect(mSocket, &QTcpSocket::readyRead, [&]() {
@@ -26,6 +31,13 @@ MainWidget::MainWidget(QWidget *parent) :
 
         results->saveJson(results->getJsonObjectFromString(text));
         results->readResultsJson();
+
+        ui->ram_view_table->insertRow(ui->ram_view_table->rowCount());
+
+        ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Address, new QTableWidgetItem(results->request->getMemoryAddress()));
+        ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Value, new QTableWidgetItem(results->request->getValue()));
+        ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Label, new QTableWidgetItem(results->request->getLabel()));
+        ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, References, new QTableWidgetItem(results->request->getReferences()));
 
         ui->stdout_textEdit->append(text);
     });
@@ -58,6 +70,7 @@ void MainWidget::showError()
         ui->applog_textEdit->append(error);
         QMessageBox::information(this, tr("Information"), tr("Your code has failed!"));
         ui->run_button->setText("run");
+        ui->ram_view_table->setRowCount(0);
 
     } else {
         ui->run_button->setText("Next");
@@ -69,6 +82,10 @@ void MainWidget::on_run_button_clicked()
     getInstance();
 
     QString code = ui->ide_TextEdit->toPlainText();
+
+    if (code.isEmpty()) {
+        return;
+    }
 
     QString text = json->Generate(code);
 

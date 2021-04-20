@@ -21,7 +21,7 @@ QString Request::getValue() {
 }
 
 void Request::setValue(QString entry) {
-    label = entry;
+    value = entry;
 }
 
 QString Request::getReferences() {

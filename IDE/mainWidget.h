@@ -29,6 +29,9 @@ private:
     void showError();
     QTcpSocket *mSocket;
     messageGenerator *json;
+    enum Columna {
+        Address, Value, Label, References
+    };
 };
 
 #endif // MAINWIDGET_H

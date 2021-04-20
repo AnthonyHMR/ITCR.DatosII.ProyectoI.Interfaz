@@ -19,6 +19,19 @@
      <item row="0" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>RAM Live View</string>
@@ -26,7 +39,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_4">
+        <spacer name="horizontalSpacer_5">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -68,7 +81,7 @@
       <widget class="QTextEdit" name="ide_TextEdit"/>
      </item>
      <item row="2" column="1">
-      <widget class="QColumnView" name="columnView"/>
+      <widget class="QTableWidget" name="ram_view_table"/>
      </item>
     </layout>
    </item>

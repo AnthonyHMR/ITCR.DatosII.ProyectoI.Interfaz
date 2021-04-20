@@ -1,16 +1,16 @@
 #ifndef RESULTS_H
 #define RESULTS_H
 
+#include "Conditions.h"
 #include <QString>
 #include "Request.h"
 #include <QJsonObject>
 #include <QJsonDocument>
 
-class jsonConverter
+class jsonConverter : public Conditions
 {
 public:
     jsonConverter(QString);
-public:
     void saveJson(QJsonObject);
     QJsonObject getJsonObjectFromString(const QString);
     void readResultsJson();

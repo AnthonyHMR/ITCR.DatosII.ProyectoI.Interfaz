@@ -16,9 +16,6 @@ protected:
     QJsonObject getConditions(QStringList, QStringList, int);
     void addJsonFile(QJsonArray, QString);
     void setError(QString);
-
-private:
-
 };
 
 #endif // CONDITIONS_H
