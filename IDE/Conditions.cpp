@@ -2,10 +2,6 @@
 #include <QFile>
 #include <QJsonDocument>
 
-Conditions::Conditions()
-{
-}
-
 QJsonObject Conditions::getConditions(QStringList queryLines, QStringList queryObjects, int line) {
     QJsonObject obj;
 
@@ -44,7 +40,7 @@ void Conditions::addJsonFile(QJsonArray ArrayObj, QString fileName)
     doc.setArray(ArrayObj);
     data_json = doc.toJson();
 
-    QFile output("../" + fileName + ".json");
+    QFile output(fileName);
     output.open(QIODevice::WriteOnly | QIODevice::Text);
     output.write(data_json);
     output.close();
@@ -52,8 +48,4 @@ void Conditions::addJsonFile(QJsonArray ArrayObj, QString fileName)
 
 void Conditions::setError(QString text) {
     error = text;
-}
-
-QString Conditions::getError() {
-    return error;
 }

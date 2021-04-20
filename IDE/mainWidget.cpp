@@ -70,7 +70,6 @@ void MainWidget::showError()
         ui->applog_textEdit->append(error);
         QMessageBox::information(this, tr("Information"), tr("Your code has failed!"));
         ui->run_button->setText("run");
-        ui->ram_view_table->setRowCount(0);
 
     } else {
         ui->run_button->setText("Next");
@@ -79,6 +78,9 @@ void MainWidget::showError()
 
 void MainWidget::on_run_button_clicked()
 {
+    if (ui->run_button->text() == "run") {
+        ui->ram_view_table->setRowCount(0);
+    }
     getInstance();
 
     QString code = ui->ide_TextEdit->toPlainText();

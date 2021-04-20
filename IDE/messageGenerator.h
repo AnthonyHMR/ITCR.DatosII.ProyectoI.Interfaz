@@ -6,24 +6,21 @@
 #include <QJsonArray>
 #include "jsonConverter.h"
 
-class messageGenerator : public QObject
+class messageGenerator : public QObject, Conditions
 {
     Q_OBJECT
 public:
-    explicit messageGenerator(QObject *parent = nullptr);
+    messageGenerator(QObject *parent = nullptr);
     QString Generate(QString);
     QString getError();
 
 private:
-    QJsonObject getConditions();
     void addJsonFile(QJsonArray, QString);
     bool codeEnd();
-    void setError(QString);
-    QStringList queryLines, queryObjects;
+    QStringList queryLines;
     QJsonArray ArrayObj;
     int line = 0;
     QString error = "";
-    //jsonConverter *converter;
 };
 
 #endif // JSONCONVERTER_H

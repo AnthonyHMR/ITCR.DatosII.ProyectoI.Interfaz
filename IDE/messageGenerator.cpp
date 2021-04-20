@@ -13,19 +13,20 @@ QString messageGenerator::Generate(QString entry)
     QRegExp lines("(\\\n)");
     QRegExp objects("(\\ |\\;)");
 
-    error = "";
+    Conditions::setError("");
 
     queryLines = entry.split(lines);
     queryLines.removeAll("");
 
-    queryObjects = queryLines[line].split(objects);
+    QStringList queryObjects = queryLines[line].split(objects);
     //queryObjects.removeAll("");
 
     QByteArray data_json;
     QJsonDocument doc;
-    QJsonObject conditions = getConditions();
+    QJsonObject conditions = Conditions::getConditions(queryLines, queryObjects, line);
 
     if (getError() != "") {
+        line = 0;
         return 0;
     }
 
@@ -34,11 +35,12 @@ QString messageGenerator::Generate(QString entry)
     ArrayObj.append(conditions);
 
     if (codeEnd()){
-        addJsonFile(ArrayObj, "variables");
+        Conditions::addJsonFile(ArrayObj, "../variables.json");
         while(!ArrayObj.isEmpty()) {
             ArrayObj.removeLast();
         }
-        setError("end");
+        Conditions::setError("end");
+        line = 0;
     }
 
     doc.setObject(conditions);
@@ -46,50 +48,6 @@ QString messageGenerator::Generate(QString entry)
     data_json = doc.toJson();
 
     return data_json;
-}
-
-QJsonObject messageGenerator::getConditions() {
-    QJsonObject obj;
-
-    if (!queryLines[line].endsWith(";")) {
-        setError("Expected ';' at end of declaration");
-
-    }else if (queryObjects[0] == "int" or queryObjects[0] == "string" or queryObjects[0] == "char") {
-        obj["dataType"] = queryObjects[0];
-        obj["label"] = queryObjects[1];
-
-        if (queryObjects[2].isEmpty()) {
-            obj["expression"] = "";
-            obj["value"] = "0";
-        } else if ((queryObjects[0] == "int" or queryObjects[0] == "char") and (queryObjects[2] == "-" or queryObjects[2] == "*" or queryObjects[2] == "/")) {
-            obj["expression"] = queryObjects[2];
-            obj["value"] = queryObjects[3];
-        } else if (queryObjects[2] == "=" or queryObjects[2] == "+") {
-            obj["expression"] = queryObjects[2];
-            obj["value"] = queryObjects[3];
-        } else {
-            setError("Unexpected expresion");
-        }
-
-    } else {
-        setError("Error data type");
-    }
-
-    return obj;
-}
-
-void messageGenerator::addJsonFile(QJsonArray ArrayObj, QString fileName)
-{
-    QByteArray data_json;
-    QJsonDocument doc;
-
-    doc.setArray(ArrayObj);
-    data_json = doc.toJson();
-
-    QFile output("../" + fileName + ".json");
-    output.open(QIODevice::WriteOnly | QIODevice::Text);
-    output.write(data_json);
-    output.close();
 }
 
 bool messageGenerator::codeEnd()
@@ -101,10 +59,5 @@ bool messageGenerator::codeEnd()
 }
 
 QString messageGenerator::getError() {
-    return error;
-}
-
-void messageGenerator::setError(QString text) {
-    error = text;
-    line = 0;
+    return Conditions::error;
 }

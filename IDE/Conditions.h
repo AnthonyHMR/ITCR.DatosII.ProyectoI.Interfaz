@@ -7,15 +7,11 @@
 
 class Conditions
 {
-public:
-    Conditions();
-    QString getError();
-    QString error = "";
-
 protected:
     QJsonObject getConditions(QStringList, QStringList, int);
     void addJsonFile(QJsonArray, QString);
     void setError(QString);
+    QString error = "";
 };
 
 #endif // CONDITIONS_H
