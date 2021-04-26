@@ -5,10 +5,10 @@
 #include <QJsonArray>
 
 
-class Conditions
+class variablesConditions
 {
 protected:
-    QJsonObject getConditions(QStringList, QStringList, int);
+    QJsonObject getConditions(QStringList);
     void addJsonFile(QJsonArray, QString);
     void setError(QString);
     QString error = "";

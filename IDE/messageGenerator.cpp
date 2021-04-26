@@ -3,17 +3,16 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QMessageBox>
+#include <QDebug>
 
-messageGenerator::messageGenerator(QObject *parent) : QObject(parent)
-{
-}
+messageGenerator::messageGenerator(QObject *parent) : QObject(parent) {}
 
 QString messageGenerator::Generate(QString entry)
 {
     QRegExp lines("(\\\n)");
-    QRegExp objects("(\\ |\\;)");
+    QRegExp objects("(\\ |\\;|\\{|\\}|\\\t)");
 
-    Conditions::setError("");
+    variablesConditions::setError("");
 
     queryLines = entry.split(lines);
     queryLines.removeAll("");
@@ -23,10 +22,43 @@ QString messageGenerator::Generate(QString entry)
 
     QByteArray data_json;
     QJsonDocument doc;
-    QJsonObject conditions = Conditions::getConditions(queryLines, queryObjects, line);
+    QJsonObject conditions;
 
+    if (queryLines[line].endsWith("{") and flag == false) {
+        flag = true;
+    } else if (!queryLines[line].endsWith(";")) {
+        variablesConditions::setError("Expected ';' at the end of declaration");
+        while(!ArrayStruct.isEmpty()) {
+            ArrayStruct.removeFirst();
+        }
+        flag = false;
+        line = 0;
+        return 0;
+    }
+
+    if (flag) {
+
+        if (queryLines[line].contains("}")){
+            qDebug()<< "===> please check the string" << queryObjects;
+            conditions = structConditions::getConditions(ArrayStruct);
+            conditions["label"] = queryObjects[1];
+            while(!ArrayStruct.isEmpty()) {
+                ArrayStruct.removeFirst();
+            }
+            flag = false;
+        } else {
+            ArrayStruct.append(queryObjects);
+            line ++;
+            return 0;
+        }
+    } else {
+        conditions = variablesConditions::getConditions(queryObjects);
+    }
+
+    //Verifica si hubo un error en una linea de codigo
     if (getError() != "") {
         line = 0;
+        flag = false;
         return 0;
     }
 
@@ -35,11 +67,11 @@ QString messageGenerator::Generate(QString entry)
     ArrayObj.append(conditions);
 
     if (codeEnd()){
-        Conditions::addJsonFile(ArrayObj, "../variables.json");
+        variablesConditions::addJsonFile(ArrayObj, "../variables.json");
         while(!ArrayObj.isEmpty()) {
             ArrayObj.removeLast();
         }
-        Conditions::setError("end");
+        variablesConditions::setError("end");
         line = 0;
     }
 
@@ -59,5 +91,5 @@ bool messageGenerator::codeEnd()
 }
 
 QString messageGenerator::getError() {
-    return Conditions::error;
+    return variablesConditions::error;
 }

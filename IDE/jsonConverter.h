@@ -1,13 +1,12 @@
 #ifndef RESULTS_H
 #define RESULTS_H
 
-#include "Conditions.h"
 #include <QString>
 #include "Request.h"
 #include <QJsonObject>
 #include <QJsonDocument>
 
-class jsonConverter : public Conditions
+class jsonConverter
 {
 public:
     jsonConverter(QString);

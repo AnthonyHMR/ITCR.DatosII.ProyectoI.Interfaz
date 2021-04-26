@@ -1,14 +1,11 @@
-#include "Conditions.h"
+#include "variablesConditions.h"
 #include <QFile>
 #include <QJsonDocument>
 
-QJsonObject Conditions::getConditions(QStringList queryLines, QStringList queryObjects, int line) {
+QJsonObject variablesConditions::getConditions(QStringList queryObjects) {
     QJsonObject obj;
 
-    if (!queryLines[line].endsWith(";")) {
-        setError("Expected ';' at end of declaration");
-
-    }else if (queryObjects[0] == "int" or queryObjects[0] == "string" or queryObjects[0] == "char") {
+    if (queryObjects[0] == "int" or queryObjects[0] == "string" or queryObjects[0] == "char") {
         obj["dataType"] = queryObjects[0];
         obj["label"] = queryObjects[1];
 
@@ -32,7 +29,7 @@ QJsonObject Conditions::getConditions(QStringList queryLines, QStringList queryO
     return obj;
 }
 
-void Conditions::addJsonFile(QJsonArray ArrayObj, QString fileName)
+void variablesConditions::addJsonFile(QJsonArray ArrayObj, QString fileName)
 {
     QByteArray data_json;
     QJsonDocument doc;
@@ -46,6 +43,6 @@ void Conditions::addJsonFile(QJsonArray ArrayObj, QString fileName)
     output.close();
 }
 
-void Conditions::setError(QString text) {
+void variablesConditions::setError(QString text) {
     error = text;
 }

@@ -1,14 +1,15 @@
 [
     {
-        "dataType": "int",
-        "expression": "=",
-        "label": "a",
-        "value": "10"
-    },
-    {
-        "dataType": "int",
-        "expression": "=",
-        "label": "b",
-        "value": "9"
+        "dataType": "struct",
+        "expression": "",
+        "label": "",
+        "value": [
+            {
+                "dataType": "int",
+                "expression": "=",
+                "label": "a",
+                "value": "90"
+            }
+        ]
     }
 ]

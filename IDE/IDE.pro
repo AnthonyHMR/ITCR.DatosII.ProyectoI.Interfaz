@@ -16,19 +16,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Conditions.cpp \
     Request.cpp \
     jsonConverter.cpp \
     main.cpp \
     mainWidget.cpp \
-    messageGenerator.cpp
+    messageGenerator.cpp \
+    structConditions.cpp \
+    variablesConditions.cpp
 
 HEADERS += \
-    Conditions.h \
     Request.h \
     jsonConverter.h \
     mainWidget.h \
-    messageGenerator.h
+    messageGenerator.h \
+    structConditions.h \
+    variablesConditions.h
 
 FORMS += \
     mainWidget.ui

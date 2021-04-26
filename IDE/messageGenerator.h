@@ -5,8 +5,9 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "jsonConverter.h"
+#include "structConditions.h"
 
-class messageGenerator : public QObject, Conditions
+class messageGenerator : public QObject, public structConditions
 {
     Q_OBJECT
 public:
@@ -18,9 +19,11 @@ private:
     void addJsonFile(QJsonArray, QString);
     bool codeEnd();
     QStringList queryLines;
+    QStringList ArrayStruct;
     QJsonArray ArrayObj;
     int line = 0;
     QString error = "";
+    bool flag = false;
 };
 
 #endif // JSONCONVERTER_H

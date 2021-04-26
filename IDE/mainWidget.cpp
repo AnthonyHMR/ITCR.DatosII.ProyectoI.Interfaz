@@ -7,7 +7,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
-#include <QDebug>
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
