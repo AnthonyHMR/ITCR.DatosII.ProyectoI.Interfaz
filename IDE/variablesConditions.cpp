@@ -22,6 +22,12 @@ QJsonObject variablesConditions::getConditions(QStringList queryObjects) {
             setError("Unexpected expresion");
         }
 
+    } else if(queryObjects[0] == "print" or queryObjects[0] == "printf" or queryObjects[0] == "cout") {
+        queryObjects.removeAll("");
+        obj["dataType"] = "print";
+        obj["label"] = "";
+        obj["expression"] = "";
+        obj["value"] = queryObjects[1];
     } else {
         setError("Error data type");
     }
