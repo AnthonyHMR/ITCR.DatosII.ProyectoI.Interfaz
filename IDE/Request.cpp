@@ -31,3 +31,11 @@ QString Request::getReferences() {
 void Request::setReferences(QString entry) {
     references = entry;
 }
+
+QString Request::getLog() {
+    return references;
+}
+
+void Request::setLog(QString entry) {
+    references = entry;
+}

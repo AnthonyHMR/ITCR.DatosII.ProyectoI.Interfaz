@@ -1,6 +1,7 @@
 {
-    "label": "a",
-    "memoryAddress": "0x56020c67cf60",
+    "label": "b",
+    "log": "[2021-05-04 17:31:18.575] [Log_MSG] [info] An int data type has been allocated\n[2021-05-04 17:31:21.441] [Log_MSG] [info] An int data type has been allocated\n\u0000",
+    "memoryAddress": "0x559764b4e1b4",
     "references": "1",
-    "value": "90"
+    "value": "0"
 }

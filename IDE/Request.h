@@ -14,6 +14,8 @@ public:
     void setValue(QString);
     QString getReferences();
     void setReferences(QString);
+    QString getLog();
+    void setLog(QString);
 private:
     QString memoryAddress;
     QString label;

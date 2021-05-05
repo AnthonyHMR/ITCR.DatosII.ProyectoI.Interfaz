@@ -34,6 +34,7 @@ void jsonConverter::readResultsJson() {
     request->setLabel(obj["label"].toString());
     request->setValue(obj["value"].toString());
     request->setReferences(obj["references"].toString());
+    request->setLog(obj["log"].toString());
 }
 
 QJsonObject jsonConverter::getJsonObjectFromString(const QString jsonString) {
