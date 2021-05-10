@@ -40,7 +40,7 @@ QString messageGenerator::Generate(QString entry)
 
         if (queryLines[line].contains("}")){
             qDebug()<< "===> please check the string" << queryObjects;
-            conditions = structConditions::getConditions(ArrayStruct);
+            conditions = structConditions::getConditions(ArrayStruct, line+1 == queryLines.length());
             conditions["label"] = queryObjects[1];
             while(!ArrayStruct.isEmpty()) {
                 ArrayStruct.removeFirst();
@@ -52,7 +52,7 @@ QString messageGenerator::Generate(QString entry)
             return 0;
         }
     } else {
-        conditions = variablesConditions::getConditions(queryObjects);
+        conditions = variablesConditions::getConditions(queryObjects, line+1 == queryLines.length());
     }
 
     //Verifica si hubo un error en una linea de codigo

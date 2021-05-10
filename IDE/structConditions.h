@@ -10,7 +10,7 @@ class structConditions : public variablesConditions
 {
 public:
     structConditions();
-    QJsonObject getConditions(QStringList);
+    QJsonObject getConditions(QStringList, bool);
     QJsonArray ArrayObj;
 };
 

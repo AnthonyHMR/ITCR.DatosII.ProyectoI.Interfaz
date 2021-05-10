@@ -33,14 +33,17 @@ MainWidget::MainWidget(QWidget *parent) :
 
         ui->ram_view_table->insertRow(ui->ram_view_table->rowCount());
 
-        ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Address, new QTableWidgetItem(results->request->getMemoryAddress()));
-        ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Value, new QTableWidgetItem(results->request->getValue()));
-        ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Label, new QTableWidgetItem(results->request->getLabel()));
-        ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, References, new QTableWidgetItem(results->request->getReferences()));
+        if (results->request->getMemoryAddress() == "print") {
+            ui->stdout_textEdit->append(results->request->getLabel());
+        } else {
+            ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Address, new QTableWidgetItem(results->request->getMemoryAddress()));
+            ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Value, new QTableWidgetItem(results->request->getValue()));
+            ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Label, new QTableWidgetItem(results->request->getLabel()));
+            ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, References, new QTableWidgetItem(results->request->getReferences()));
+        }
 
-        ui->applog_textEdit->clear();
         ui->applog_textEdit->append(results->request->getLog());
-        ui->stdout_textEdit->append(text);
+        //ui->stdout_textEdit->append(text);
     });
 
     mSocket->connectToHost("localhost", 54000);

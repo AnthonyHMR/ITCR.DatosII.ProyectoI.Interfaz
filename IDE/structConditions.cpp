@@ -3,7 +3,7 @@
 
 structConditions::structConditions() {}
 
-QJsonObject structConditions::getConditions(QStringList ArrayStruct) {
+QJsonObject structConditions::getConditions(QStringList ArrayStruct, bool end) {
     QJsonObject obj;
     QJsonObject conditions;
     QStringList variable;
@@ -29,7 +29,7 @@ QJsonObject structConditions::getConditions(QStringList ArrayStruct) {
                 }
             }
 
-            conditions = variablesConditions::getConditions(variable);
+            conditions = variablesConditions::getConditions(variable, false);
             ArrayObj.append(conditions);
 
             while(!variable.isEmpty()) {
@@ -46,6 +46,12 @@ QJsonObject structConditions::getConditions(QStringList ArrayStruct) {
 
     } else {
         variablesConditions::setError("Error data type");
+    }
+
+    if (end == true) {
+        obj["reset"] = "true";
+    } else {
+        obj["reset"] = "false";
     }
 
     return obj;

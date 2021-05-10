@@ -8,7 +8,7 @@
 class variablesConditions
 {
 protected:
-    QJsonObject getConditions(QStringList);
+    QJsonObject getConditions(QStringList, bool);
     void addJsonFile(QJsonArray, QString);
     void setError(QString);
     QString error = "";

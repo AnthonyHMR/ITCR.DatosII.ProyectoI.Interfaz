@@ -2,7 +2,7 @@
 #include <QFile>
 #include <QJsonDocument>
 
-QJsonObject variablesConditions::getConditions(QStringList queryObjects) {
+QJsonObject variablesConditions::getConditions(QStringList queryObjects, bool end) {
     QJsonObject obj;
 
     if (queryObjects[0] == "int" or queryObjects[0] == "string" or queryObjects[0] == "char") {
@@ -30,6 +30,12 @@ QJsonObject variablesConditions::getConditions(QStringList queryObjects) {
         obj["value"] = queryObjects[1];
     } else {
         setError("Error data type");
+    }
+
+    if (end == true) {
+        obj["reset"] = "true";
+    } else {
+        obj["reset"] = "false";
     }
 
     return obj;
