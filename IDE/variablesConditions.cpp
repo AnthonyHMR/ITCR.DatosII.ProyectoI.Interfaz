@@ -28,12 +28,24 @@ QJsonObject variablesConditions::getConditions(QStringList queryObjects, bool en
         obj["label"] = "";
         obj["expression"] = "";
         obj["value"] = queryObjects[1];
-    } else {
+    } else if(queryObjects[0] == "reference") {
+        queryObjects.removeAll("");
+        obj["dataType"] = queryObjects[0];
+        obj["value"] = queryObjects[5];
+        obj["expression"] = queryObjects[1];
+        obj["label"] = queryObjects[2];
+    }else {
         setError("Error data type");
     }
 
-    if (end == true) {
+    if (end == true or error != "") {
         obj["reset"] = "true";
+        if (error != "") {
+            obj["dataType"] = "";
+            obj["value"] = "";
+            obj["expression"] = "";
+            obj["label"] = "";
+        }
     } else {
         obj["reset"] = "false";
     }

@@ -10,7 +10,7 @@ messageGenerator::messageGenerator(QObject *parent) : QObject(parent) {}
 QString messageGenerator::Generate(QString entry)
 {
     QRegExp lines("(\\\n)");
-    QRegExp objects("(\\ |\\;|\\{|\\}|\\\t|\\(|\\)|\\<)");
+    QRegExp objects("(\\ |\\;|\\{|\\}|\\\t|\\(|\\)|\\<|\\>)");
 
     variablesConditions::setError("");
 
