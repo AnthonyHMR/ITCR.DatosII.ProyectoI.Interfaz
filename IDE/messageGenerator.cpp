@@ -59,7 +59,11 @@ QString messageGenerator::Generate(QString entry)
     if (getError() != "") {
         line = 0;
         flag = false;
-        return 0;
+        doc.setObject(conditions);
+
+        data_json = doc.toJson();
+
+        return data_json;
     }
 
     line ++;

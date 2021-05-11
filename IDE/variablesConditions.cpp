@@ -12,7 +12,7 @@ QJsonObject variablesConditions::getConditions(QStringList queryObjects, bool en
         if (queryObjects[2].isEmpty()) {
             obj["expression"] = "";
             obj["value"] = "0";
-        } else if ((queryObjects[0] == "int" or queryObjects[0] == "char") and (queryObjects[2] == "-" or queryObjects[2] == "*" or queryObjects[2] == "/")) {
+        } else if ((queryObjects[0] == "int" or queryObjects[0] == "char" or queryObjects[0] == "long" or queryObjects[0] == "short" or queryObjects[0] == "double" or queryObjects[0] == "float") and (queryObjects[2] == "-" or queryObjects[2] == "*" or queryObjects[2] == "/")) {
             obj["expression"] = queryObjects[2];
             obj["value"] = queryObjects[3];
         } else if (queryObjects[2] == "=" or queryObjects[2] == "+") {

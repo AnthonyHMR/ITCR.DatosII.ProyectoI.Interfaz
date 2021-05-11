@@ -48,8 +48,14 @@ QJsonObject structConditions::getConditions(QStringList ArrayStruct, bool end) {
         variablesConditions::setError("Error data type");
     }
 
-    if (end == true) {
+    if (end == true or error != "") {
         obj["reset"] = "true";
+        if (error != "") {
+            obj["dataType"] = "";
+            obj["value"] = "";
+            obj["expression"] = "";
+            obj["label"] = "";
+        }
     } else {
         obj["reset"] = "false";
     }

@@ -31,18 +31,16 @@ MainWidget::MainWidget(QWidget *parent) :
         results->saveJson(results->getJsonObjectFromString(text));
         results->readResultsJson();
 
-        ui->ram_view_table->insertRow(ui->ram_view_table->rowCount());
-
         if (results->request->getMemoryAddress() == "print") {
             ui->stdout_textEdit->append(results->request->getLabel());
         } else {
+            ui->ram_view_table->insertRow(ui->ram_view_table->rowCount());
             ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Address, new QTableWidgetItem(results->request->getMemoryAddress()));
             ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Value, new QTableWidgetItem(results->request->getValue()));
             ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Label, new QTableWidgetItem(results->request->getLabel()));
             ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, References, new QTableWidgetItem(results->request->getReferences()));
+            ui->applog_textEdit->append(results->request->getLog());
         }
-
-        ui->applog_textEdit->append(results->request->getLog());
         //ui->stdout_textEdit->append(text);
     });
 
@@ -84,6 +82,7 @@ void MainWidget::on_run_button_clicked()
 {
     if (ui->run_button->text() == "run") {
         ui->ram_view_table->setRowCount(0);
+        ui->stdout_textEdit->clear();
     }
     getInstance();
 
