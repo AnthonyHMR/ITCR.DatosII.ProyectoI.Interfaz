@@ -12,10 +12,10 @@ QJsonObject variablesConditions::getConditions(QStringList queryObjects, bool en
             obj["expression"] = "";
             obj["value"] = "0";
         } else if (queryObjects[3].contains(".getValue")) {
-            //QRegExp getValue("(\\getValue)");
-            //QStringList ptrValue = queryObjects[3].split(getValue);
-            //ptrValue.removeAll("");
-            obj["value"] = queryObjects[3];
+            QRegExp getValue("(\\.getValue)");
+            QStringList ptrValue = queryObjects[3].split(getValue);
+            ptrValue.removeAll("");
+            obj["value"] = ptrValue[0];
             obj["expression"] = "";
         } else if ((queryObjects[0] == "int" or queryObjects[0] == "char" or queryObjects[0] == "long" or queryObjects[0] == "short" or queryObjects[0] == "double" or queryObjects[0] == "float") and (queryObjects[2] == "-" or queryObjects[2] == "*" or queryObjects[2] == "/")) {
             obj["expression"] = queryObjects[2];
