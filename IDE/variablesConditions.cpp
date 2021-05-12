@@ -4,7 +4,6 @@
 
 QJsonObject variablesConditions::getConditions(QStringList queryObjects, bool end) {
     QJsonObject obj;
-
     if (queryObjects[0] == "int" or queryObjects[0] == "string" or queryObjects[0] == "char" or queryObjects[0] == "long" or queryObjects[0] == "short" or queryObjects[0] == "double" or queryObjects[0] == "float") {
         obj["dataType"] = queryObjects[0];
         obj["label"] = queryObjects[1];
@@ -12,6 +11,12 @@ QJsonObject variablesConditions::getConditions(QStringList queryObjects, bool en
         if (queryObjects[2].isEmpty()) {
             obj["expression"] = "";
             obj["value"] = "0";
+        } else if (queryObjects[3].contains(".getValue")) {
+            //QRegExp getValue("(\\getValue)");
+            //QStringList ptrValue = queryObjects[3].split(getValue);
+            //ptrValue.removeAll("");
+            obj["value"] = queryObjects[3];
+            obj["expression"] = "";
         } else if ((queryObjects[0] == "int" or queryObjects[0] == "char" or queryObjects[0] == "long" or queryObjects[0] == "short" or queryObjects[0] == "double" or queryObjects[0] == "float") and (queryObjects[2] == "-" or queryObjects[2] == "*" or queryObjects[2] == "/")) {
             obj["expression"] = queryObjects[2];
             obj["value"] = queryObjects[3];
