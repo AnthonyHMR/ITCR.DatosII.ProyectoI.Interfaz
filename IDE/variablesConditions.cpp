@@ -5,7 +5,7 @@
 QJsonObject variablesConditions::getConditions(QStringList queryObjects, bool end) {
     QJsonObject obj;
 
-    if (queryObjects[0] == "int" or queryObjects[0] == "string" or queryObjects[0] == "char") {
+    if (queryObjects[0] == "int" or queryObjects[0] == "string" or queryObjects[0] == "char" or queryObjects[0] == "long" or queryObjects[0] == "short" or queryObjects[0] == "double" or queryObjects[0] == "float") {
         obj["dataType"] = queryObjects[0];
         obj["label"] = queryObjects[1];
 

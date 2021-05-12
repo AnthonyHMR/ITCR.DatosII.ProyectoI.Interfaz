@@ -39,8 +39,8 @@ MainWidget::MainWidget(QWidget *parent) :
             ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Value, new QTableWidgetItem(results->request->getValue()));
             ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, Label, new QTableWidgetItem(results->request->getLabel()));
             ui->ram_view_table->setItem(ui->ram_view_table->rowCount()-1, References, new QTableWidgetItem(results->request->getReferences()));
-            ui->applog_textEdit->append(results->request->getLog());
         }
+        ui->applog_textEdit->append(results->request->getLog());
         //ui->stdout_textEdit->append(text);
     });
 

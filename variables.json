@@ -3,12 +3,7 @@
         "dataType": "int",
         "expression": "=",
         "label": "a",
-        "value": "9"
-    },
-    {
-        "dataType": "int",
-        "expression": "",
-        "label": "b",
-        "value": "0"
+        "reset": "true",
+        "value": "90"
     }
 ]

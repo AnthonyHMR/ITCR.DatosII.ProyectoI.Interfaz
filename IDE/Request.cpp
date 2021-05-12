@@ -33,9 +33,9 @@ void Request::setReferences(QString entry) {
 }
 
 QString Request::getLog() {
-    return references;
+    return log;
 }
 
 void Request::setLog(QString entry) {
-    references = entry;
+    log = entry;
 }

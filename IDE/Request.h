@@ -21,6 +21,7 @@ private:
     QString label;
     QString value;
     QString references;
+    QString log;
 };
 
 #endif // REQUEST_H
